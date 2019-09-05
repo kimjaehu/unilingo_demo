@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class App extends Component {
+class Login extends Component {
   componentDidMount() {
     window.gapi.load('client:auth2', function() {
       console.log(process.env.REACT_APP_CLIENT_ID);
@@ -9,7 +9,7 @@ class App extends Component {
   }
 
   render() {
-    return <div className='App'></div>;
+    return <div></div>;
   }
 }
-export default App;
+export default Login;
