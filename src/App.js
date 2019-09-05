@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
+import Login from './components/Login';
 
 class App extends Component {
-  componentDidMount() {
-    window.gapi.load('client:auth2', function() {
-      console.log(process.env.REACT_APP_CLIENT_ID);
-      window.gapi.auth2.init({ client_id: process.env.REACT_APP_CLIENT_ID });
-    });
-  }
-
   render() {
-    return <div className='App'></div>;
+    return (
+      <div className='App'>
+        <Login />
+      </div>
+    );
   }
 }
+
 export default App;
