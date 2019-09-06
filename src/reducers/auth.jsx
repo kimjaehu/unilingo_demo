@@ -1,11 +1,25 @@
+import { LOGIN_SUCCESS, LOGIN_FAIL } from '../actions/types';
+
 const initialState = {
   isAuthenticated: null,
-  isLoading: false,
-  user: null
+  analytics: null
 };
 
 const authReducer = (state = initialState, action) => {
-  return state;
+  switch (action.type) {
+    case LOGIN_SUCCESS:
+      return {
+        ...state,
+        isAuthenticated: true,
+      };
+    case LOGIN_FAIL:
+      return {
+        ...state,
+        videos: []
+      };
+    default:
+      return state;
+  }
 };
 
 export default authReducer;

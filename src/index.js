@@ -3,18 +3,25 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { createStore, combineReducers } from 'redux';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import thunk from 'redux-thunk';
 
-import authReducer from './reducers/auth';
-import videoReducer from './reducers/videos';
+import auth from './reducers/auth';
+import videos from './reducers/videos';
+
+const middleware = [thunk];
 
 const rootReducer = combineReducers({
-  auth: authReducer,
-  video: videoReducer
+  auth,
+  videos
 });
 
-const store = createStore(rootReducer);
+const store = createStore(
+  rootReducer,
+  composeWithDevTools(applyMiddleware(...middleware))
+);
 
 ReactDOM.render(
   <Provider store={store}>

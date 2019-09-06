@@ -1,31 +1,26 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { login, loadClient } from '../actions/auth';
 
-const SCOPE_YOUTUBE = 'https://www.googleapis.com/auth/youtube.readonly';
-const SCOPE_YT_ANALYTICS =
-  'https://www.googleapis.com/auth/yt-analytics.readonly';
 class Login extends Component {
   componentDidMount() {
+    //initialize google auth
     window.gapi.load('client:auth2', function() {
       console.log(process.env.REACT_APP_CLIENT_ID);
       window.gapi.auth2.init({ client_id: process.env.REACT_APP_CLIENT_ID });
     });
   }
 
+  //google auth2 sign in
   googleOauth = () => {
-    return window.gapi.auth2
-      .getAuthInstance()
-      .signIn({ scope: SCOPE_YOUTUBE + ' ' + SCOPE_YT_ANALYTICS })
-      .then(
-        function() {
-          console.log('Sign-in successful');
-        },
-        function(err) {
-          console.error('Error signing in', err);
-        }
-      );
+    this.props.login().then(loadClient);
   };
 
   render() {
+    if (this.props.isAuthenticated) {
+      return <Redirect to='/' />;
+    }
     return (
       <div className='container'>
         <button
@@ -39,4 +34,14 @@ class Login extends Component {
     );
   }
 }
-export default Login;
+
+const mapStateToProps = state => {
+  return {
+    isAuthenticated: state.auth.isAuthenticated
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  { login }
+)(Login);
