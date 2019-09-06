@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { login, loadClient } from '../actions/auth';
+import { login } from '../actions/auth';
 
 class Login extends Component {
   componentDidMount() {
@@ -14,7 +14,7 @@ class Login extends Component {
 
   //google auth2 sign in
   googleOauth = () => {
-    this.props.login().then(loadClient);
+    this.props.login();
   };
 
   render() {

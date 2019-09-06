@@ -1,4 +1,9 @@
-import { LOGIN_SUCCESS, LOGIN_FAIL } from './types';
+import {
+  LOGIN_SUCCESS,
+  LOGIN_FAIL,
+  FETCH_ANALYTICS,
+  FETCH_CHANNEL
+} from './types';
 
 const SCOPE_YOUTUBE = 'https://www.googleapis.com/auth/youtube.readonly';
 const SCOPE_YT_ANALYTICS =
@@ -27,35 +32,19 @@ export const login = () => dispatch => {
 
 export const loadClient = () => {
   window.gapi.client.setApiKey(process.env.REACT_APP_GOOGLE_API_KEY);
-  return window.gapi.client
-    .load('https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest')
-    .then(
-      function() {
-        execute();
-        loadClientAnalytics();
-        console.log('GAPI client loaded for API');
-      },
-      function(err) {
-        console.error('Error loading GAPI client for API', err);
-      }
-    );
+  return window.gapi.client.load(
+    'https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest'
+  );
 };
 
-const loadClientAnalytics = () => {
-  return window.gapi.client
-    .load('https://youtubeanalytics.googleapis.com/$discovery/rest?version=v2')
-    .then(
-      function() {
-        executeAnalytics();
-        console.log('GAPI client loaded for API');
-      },
-      function(err) {
-        console.error('Error loading GAPI client for API', err);
-      }
-    );
+export const loadClientAnalytics = () => {
+  window.gapi.client.setApiKey(process.env.REACT_APP_GOOGLE_API_KEY);
+  return window.gapi.client.load(
+    'https://youtubeanalytics.googleapis.com/$discovery/rest?version=v2'
+  );
 };
 
-const execute = () => {
+export const execute = () => dispatch => {
   return window.gapi.client.youtube.channels
     .list({
       part: 'snippet,contentDetails,statistics',
@@ -65,6 +54,10 @@ const execute = () => {
       function(response) {
         // Handle the results here (response.result has the parsed body).
         console.log('Response youtube', response);
+        dispatch({
+          type: FETCH_CHANNEL,
+          payload: response.result
+        });
       },
       function(err) {
         console.error('Execute error', err);
@@ -72,7 +65,7 @@ const execute = () => {
     );
 };
 
-function executeAnalytics() {
+export const executeAnalytics = () => dispatch => {
   return window.gapi.client.youtubeAnalytics.reports
     .query({
       ids: 'channel==MINE',
@@ -87,9 +80,32 @@ function executeAnalytics() {
       function(response) {
         // Handle the results here (response.result has the parsed body).
         console.log('Response analytics', response);
+        dispatch({
+          type: FETCH_ANALYTICS,
+          payload: response.result
+        });
       },
       function(err) {
         console.error('Execute error', err);
       }
     );
-}
+};
+
+export const executePlaylist = () => {
+  console.log(this.props);
+  return window.gapi.client.youtube.playlistItems
+    .list({
+      part: 'snippet,contentDetails',
+      maxResults: 25,
+      playlistId: 'playlistId'
+    })
+    .then(
+      function(response) {
+        // Handle the results here (response.result has the parsed body).
+        console.log('Response', response);
+      },
+      function(err) {
+        console.error('Execute error', err);
+      }
+    );
+};
