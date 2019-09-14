@@ -36,8 +36,7 @@ const mapStateToProps = state => {
   return {
     isAuthenticated: state.auth.isAuthenticated,
     videos: state.auth.videos,
-    playlistId: state.auth.playlistId,
-    videos: state.auth.videos
+    playlistId: state.auth.playlistId
   };
 };
 

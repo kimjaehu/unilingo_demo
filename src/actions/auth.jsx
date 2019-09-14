@@ -158,3 +158,15 @@ export const executeAnalytics = () => dispatch => {
       }
     );
 };
+
+export const signOut = () => {
+  const auth = window.gapi.auth2.getAuthInstance();
+  auth.signOut().then(
+    () => {
+      console.log('User signed out.');
+    },
+    err => {
+      console.log('Sign out failed');
+    }
+  );
+};
