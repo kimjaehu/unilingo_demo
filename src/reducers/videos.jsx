@@ -1,5 +1,5 @@
 const initialState = {
-  videos: []
+  video: []
 };
 
 const videoReducer = (state = initialState, action) => {

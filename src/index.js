@@ -9,13 +9,11 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 
 import auth from './reducers/auth';
-import videos from './reducers/videos';
 
 const middleware = [thunk];
 
 const rootReducer = combineReducers({
-  auth,
-  videos
+  auth
 });
 
 const store = createStore(

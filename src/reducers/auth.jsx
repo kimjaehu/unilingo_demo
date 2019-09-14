@@ -2,13 +2,15 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   FETCH_ANALYTICS,
-  FETCH_CHANNEL
+  FETCH_VIDEOS,
+  FETCH_PLAYLIST_ID
 } from '../actions/types';
 
 const initialState = {
   isAuthenticated: null,
   analytics: null,
-  channel: null
+  videos: [],
+  playlistId: null
 };
 
 const authReducer = (state = initialState, action) => {
@@ -30,10 +32,15 @@ const authReducer = (state = initialState, action) => {
         ...state,
         analytics: action.payload
       };
-    case FETCH_CHANNEL:
+    case FETCH_VIDEOS:
       return {
         ...state,
-        channel: action.payload
+        videos: action.payload
+      };
+    case FETCH_PLAYLIST_ID:
+      return {
+        ...state,
+        playlistId: action.payload
       };
     default:
       return state;

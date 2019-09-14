@@ -5,17 +5,17 @@ import {
   loadClient,
   loadClientAnalytics,
   execute,
-  executeAnalytics,
-  executePlaylist
+  getVideos,
+  executeAnalytics
 } from '../actions/auth';
 
 export class Home extends Component {
   async componentDidMount() {
     if (this.props.isAuthenticated) {
-      loadClient().then(this.props.execute);
-      loadClientAnalytics()
-        .then(this.props.executeAnalytics)
-        .then(this.props.executePlaylist);
+      loadClient()
+        .then(this.props.execute)
+        .then(this.props.getVideos);
+      loadClientAnalytics().then(this.props.executeAnalytics);
     }
   }
 
@@ -35,8 +35,9 @@ export class Home extends Component {
 const mapStateToProps = state => {
   return {
     isAuthenticated: state.auth.isAuthenticated,
-    videos: state.videos.videos,
-    channel: state.auth.channel
+    videos: state.auth.videos,
+    playlistId: state.auth.playlistId,
+    videos: state.auth.videos
   };
 };
 
@@ -45,6 +46,6 @@ export default connect(
   {
     execute,
     executeAnalytics,
-    executePlaylist
+    getVideos
   }
 )(Home);
