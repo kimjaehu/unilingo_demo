@@ -1,6 +1,7 @@
 import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
+  LOGOUT_SUCCESS,
   FETCH_ANALYTICS,
   FETCH_VIDEOS,
   FETCH_PLAYLIST_ID
@@ -26,6 +27,12 @@ const authReducer = (state = initialState, action) => {
         videos: [],
         analytics: null,
         channel: null
+      };
+    case LOGOUT_SUCCESS:
+      return {
+        ...state,
+        videos: [],
+        isAuthenticated: false
       };
     case FETCH_ANALYTICS:
       return {

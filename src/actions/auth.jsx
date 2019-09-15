@@ -1,6 +1,7 @@
 import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
+  LOGOUT_SUCCESS,
   FETCH_ANALYTICS,
   FETCH_VIDEOS,
   FETCH_PLAYLIST_ID
@@ -36,6 +37,32 @@ export const login = () => dispatch => {
       )
   );
 };
+
+// export const login = () => dispatch => {
+//   return (
+//     window.gapi.auth2
+//       .getAuthInstance()
+//       // .signIn({ scope: SCOPE_YOUTUBE + ' ' + SCOPE_YT_ANALYTICS })
+//       .signIn({
+//         scope: SCOPE_YOUTUBE + ' ' + SCOPE_YT_ANALYTICS,
+//         prompt: 'select_account'
+//       })
+//       .then(
+//         function() {
+//           console.log('Sign-in successful');
+//           dispatch({
+//             type: LOGIN_SUCCESS
+//           });
+//         },
+//         function(err) {
+//           console.error('Error signing in', err);
+//           dispatch({
+//             type: LOGIN_FAIL
+//           });
+//         }
+//       )
+//   );
+// };
 
 export const loadClient = () => {
   window.gapi.client.setApiKey(process.env.REACT_APP_GOOGLE_API_KEY);
@@ -159,14 +186,12 @@ export const executeAnalytics = () => dispatch => {
     );
 };
 
-export const signOut = () => {
+export const signOut = () => dispatch => {
   const auth = window.gapi.auth2.getAuthInstance();
-  auth.signOut().then(
-    () => {
-      console.log('User signed out.');
-    },
-    err => {
-      console.log('Sign out failed');
-    }
-  );
+  auth.signOut().then(() => {
+    console.log('User signed out.');
+    dispatch({
+      type: LOGOUT_SUCCESS
+    });
+  });
 };

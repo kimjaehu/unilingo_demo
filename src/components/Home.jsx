@@ -8,6 +8,7 @@ import {
   getVideos,
   executeAnalytics
 } from '../actions/auth';
+import moment from 'moment';
 
 export class Home extends Component {
   async componentDidMount() {
@@ -23,10 +24,41 @@ export class Home extends Component {
     if (!this.props.isAuthenticated) {
       return <Redirect to='/login' />;
     }
-    console.log(this.props);
+    console.log('videos in home', this.props.videos);
     return (
-      <div>
-        <h2> Lots of youtube videos</h2>
+      <div className='container'>
+        <div className='card-deck'>
+          <div className='row'>
+            {this.props.videos
+              ? this.props.videos.map(video => {
+                  return (
+                    <div
+                      key={video.snippet.resourceId.videoId}
+                      className='card'
+                      style={{ width: '18rem' }}
+                    >
+                      <iframe
+                        title={`youtube${video.snippet.resourceId.videoId}`}
+                        className='embed-responsive-item'
+                        src={`https://www.youtube.com/embed/${video.snippet.resourceId.videoId}`}
+                        frameBorder='0'
+                        allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture'
+                        allowFullScreen
+                      ></iframe>
+
+                      <div className='card-body'>
+                        <h5 className='card-title'>{video.snippet.title}</h5>
+                        <p className='card-text'>{video.snippet.publishedAt}</p>
+                        <a href='/' className='btn btn-primary'>
+                          Go somewhere
+                        </a>
+                      </div>
+                    </div>
+                  );
+                })
+              : null}
+          </div>
+        </div>
       </div>
     );
   }

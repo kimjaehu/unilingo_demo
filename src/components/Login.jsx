@@ -26,13 +26,18 @@ class Login extends Component {
     }
     return (
       <div className='container'>
-        <button
-          onClick={this.googleOauth}
-          type='button'
-          className='btn btn-primary mx-auto'
-        >
-          Sign In with Google
-        </button>
+        <div className='row justify-content-center'>
+          <h2>Sign in required to access the videos</h2>
+        </div>
+        <div className='row justify-content-center'>
+          <button
+            onClick={this.googleOauth}
+            type='button'
+            className='btn btn-primary mx-auto'
+          >
+            Sign In with Google
+          </button>
+        </div>
       </div>
     );
   }
