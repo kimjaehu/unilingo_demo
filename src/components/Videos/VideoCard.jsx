@@ -1,9 +1,18 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import moment from 'moment';
 
+import { approveVideo } from '../../actions/auth';
+
 export class VideoCard extends Component {
+  onClick = e => {
+    this.props.approveVideo(e.target.id);
+
+    // this.props.approveVideo(this.props.text);
+  };
+
   render() {
-    const { video } = this.props;
+    const { video, channel } = this.props;
     console.log('each video', video);
     return (
       <div
@@ -30,7 +39,11 @@ export class VideoCard extends Component {
           </p>
         </div>
         <div className='card-footer'>
-          <button className='btn btn-outline-success' onClick={() => {}}>
+          <button
+            id={video.snippet.resourceId.videoId}
+            onClick={this.onClick}
+            className='btn btn-outline-success'
+          >
             Approve
           </button>
         </div>
@@ -39,4 +52,13 @@ export class VideoCard extends Component {
   }
 }
 
-export default VideoCard;
+const mapStateToProps = state => {
+  return {
+    channel: state.auth.channel
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  { approveVideo }
+)(VideoCard);

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import {
+  authInit,
+  login,
   loadClient,
   loadClientAnalytics,
   execute,
@@ -9,8 +11,9 @@ import {
   executeAnalytics,
   signOut
 } from '../actions/auth';
-import moment from 'moment';
-import { VideosContainer } from './VideosContainer';
+import { ChannelInfo } from './ChannelInfo';
+import { VideosContainer } from './Videos/VideosContainer';
+import { ApprovedVideosContainer } from './Videos/ApprovedVideosContainer';
 
 export class Home extends Component {
   async componentDidMount() {
@@ -23,7 +26,7 @@ export class Home extends Component {
   }
 
   render() {
-    const { videos, isAuthenticated } = this.props;
+    const { videos, isAuthenticated, playlistId, approvedVideos } = this.props;
     if (!isAuthenticated) {
       return <Redirect to='/login' />;
     }
@@ -38,6 +41,23 @@ export class Home extends Component {
           >
             Sign Out
           </button>
+        </div>
+        <div className='row'>
+          <h5>Channel Info</h5>
+        </div>
+        <div className='row'>
+          <ChannelInfo channelInfo={playlistId} />
+        </div>
+        {/* <div className='row'>
+          <h5>Approved Videos</h5>
+        </div>
+        <div className='card-deck'>
+          <div className='row'>
+            <ApprovedVideosContainer approvedVideos={approvedVideos} />
+          </div>
+        </div> */}
+        <div className='row'>
+          <h5>Videos for Approval</h5>
         </div>
         <div className='card-deck'>
           <div className='row'>
@@ -89,7 +109,7 @@ export class Home extends Component {
           </div>
         </div>
         <div className='row'>
-          <button type='button' className='btn btn-outline-primary'>
+          <button type='submit' className='btn btn-outline-primary'>
             Submit
           </button>
         </div>
@@ -102,7 +122,8 @@ const mapStateToProps = state => {
   return {
     isAuthenticated: state.auth.isAuthenticated,
     videos: state.auth.videos,
-    playlistId: state.auth.playlistId
+    playlistId: state.auth.playlistId,
+    approvedVideos: state.auth.approvedVideos
   };
 };
 

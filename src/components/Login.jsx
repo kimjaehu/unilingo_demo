@@ -1,24 +1,13 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { login } from '../actions/auth';
-
+import { login, authInit } from '../actions/auth';
+// import { handleClientLoad } from '../actions/auth';
 class Login extends Component {
   componentDidMount() {
-    //initialize google auth
-    window.gapi.load('client:auth2', function() {
-      window.gapi.auth2.init({
-        client_id: process.env.REACT_APP_CLIENT_ID,
-        scope: 'https://www.googleapis.com/auth/youtube.readonly',
-        fetch_basic_profile: false
-      });
-    });
+    // handleClientLoad();
+    authInit();
   }
-
-  //google auth2 sign in
-  // googleOauth = () => {
-  //   this.props.login();
-  // };
 
   render() {
     if (this.props.isAuthenticated) {
