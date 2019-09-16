@@ -6,9 +6,11 @@ import {
   loadClientAnalytics,
   execute,
   getVideos,
-  executeAnalytics
+  executeAnalytics,
+  signOut
 } from '../actions/auth';
 import moment from 'moment';
+import { VideosContainer } from './VideosContainer';
 
 export class Home extends Component {
   async componentDidMount() {
@@ -21,16 +23,30 @@ export class Home extends Component {
   }
 
   render() {
-    if (!this.props.isAuthenticated) {
+    const { videos, isAuthenticated } = this.props;
+    if (!isAuthenticated) {
       return <Redirect to='/login' />;
     }
-    console.log('videos in home', this.props.videos);
+
     return (
       <div className='container'>
+        <div className='row'>
+          <button
+            type='button'
+            className='btn btn-outline-secondary'
+            onClick={this.props.signOut}
+          >
+            Sign Out
+          </button>
+        </div>
         <div className='card-deck'>
           <div className='row'>
-            {this.props.videos
-              ? this.props.videos.map(video => {
+            <VideosContainer videos={videos} />
+            {/* 
+        <div className='card-deck'>
+          <div className='row'>
+            {videos && videos.length
+              ? videos.map(video => {
                   return (
                     <div
                       key={video.snippet.resourceId.videoId}
@@ -48,16 +64,34 @@ export class Home extends Component {
 
                       <div className='card-body'>
                         <h5 className='card-title'>{video.snippet.title}</h5>
-                        <p className='card-text'>{video.snippet.publishedAt}</p>
-                        <a href='/' className='btn btn-primary'>
-                          Go somewhere
-                        </a>
+                        <p className='card-text text-truncate'>
+                          {video.snippet.description}
+                          <small className='text-muted'>
+                            {moment(video.snippet.publishedAt).format(
+                              'MMM DD, YYYY'
+                            )}
+                          </small>
+                        </p>
+                      </div>
+                      <div className='card-footer'>
+                        <button
+                          className='btn btn-outline-success'
+                          onClick={() => {}}
+                        >
+                          Approve
+                        </button>
                       </div>
                     </div>
                   );
                 })
               : null}
+          </div> */}
           </div>
+        </div>
+        <div className='row'>
+          <button type='button' className='btn btn-outline-primary'>
+            Submit
+          </button>
         </div>
       </div>
     );
@@ -77,6 +111,7 @@ export default connect(
   {
     execute,
     executeAnalytics,
-    getVideos
+    getVideos,
+    signOut
   }
 )(Home);

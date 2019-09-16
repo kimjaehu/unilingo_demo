@@ -16,9 +16,9 @@ class Login extends Component {
   }
 
   //google auth2 sign in
-  googleOauth = () => {
-    this.props.login();
-  };
+  // googleOauth = () => {
+  //   this.props.login();
+  // };
 
   render() {
     if (this.props.isAuthenticated) {
@@ -31,9 +31,9 @@ class Login extends Component {
         </div>
         <div className='row justify-content-center'>
           <button
-            onClick={this.googleOauth}
+            onClick={this.props.login}
             type='button'
-            className='btn btn-primary mx-auto'
+            className='btn btn-outline-primary mx-auto'
           >
             Sign In with Google
           </button>
