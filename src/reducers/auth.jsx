@@ -5,14 +5,15 @@ import {
   FETCH_ANALYTICS,
   FETCH_VIDEOS,
   APPROVE_VIDEO,
+  DISAPPROVE_VIDEO,
   FETCH_PLAYLIST_ID
 } from '../actions/types';
 
 const initialState = {
   isAuthenticated: null,
   analytics: null,
-  videos: null,
-  approvedVideos: null,
+  videos: [],
+  approvedVideos: [],
   playlistId: null
 };
 
@@ -26,17 +27,17 @@ const authReducer = (state = initialState, action) => {
     case LOGIN_FAIL:
       return {
         ...state,
-        videos: null,
+        videos: [],
         analytics: null,
         channel: null,
-        approvedVideos: null,
+        approvedVideos: [],
         playlistId: null
       };
     case LOGOUT_SUCCESS:
       return {
         ...state,
-        videos: null,
-        approvedVideos: null,
+        videos: [],
+        approvedVideos: [],
         playlistId: null,
         isAuthenticated: false
       };
@@ -58,7 +59,14 @@ const authReducer = (state = initialState, action) => {
     case APPROVE_VIDEO:
       return {
         ...state,
-        approvedVideos:
+        approvedVideos: [...state.approvedVideos, action.payload]
+      };
+    case DISAPPROVE_VIDEO:
+      return {
+        ...state,
+        approvedVideos: state.approvedVideos.filter(
+          video => action.payload !== video
+        )
       };
     default:
       return state;

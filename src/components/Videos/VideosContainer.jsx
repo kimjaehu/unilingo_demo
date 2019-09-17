@@ -5,7 +5,6 @@ import VideoCard from './VideoCard';
 export class VideosContainer extends Component {
   render() {
     const { videos } = this.props;
-    console.log('videos container', videos);
     let content = '';
 
     if (videos && videos.length) {

@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 export class ChannelInfo extends Component {
   render() {
     const { channelInfo } = this.props;
-    console.log('channelInfo', channelInfo);
     let content = '';
     if (channelInfo) {
       content = (

@@ -1,15 +1,19 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { login, authInit } from '../actions/auth';
-// import { handleClientLoad } from '../actions/auth';
+import { login, handleClientLoad } from '../actions/auth';
 class Login extends Component {
   componentDidMount() {
-    // handleClientLoad();
-    authInit();
+    handleClientLoad();
+    // authInit();
   }
 
+  // onClick = () => {
+  //   handleClientLoad();
+  // };
+
   render() {
+    const { login } = this.props;
     if (this.props.isAuthenticated) {
       return <Redirect to='/' />;
     }
@@ -20,7 +24,7 @@ class Login extends Component {
         </div>
         <div className='row justify-content-center'>
           <button
-            onClick={this.props.login}
+            onClick={login}
             type='button'
             className='btn btn-outline-primary mx-auto'
           >

@@ -2,18 +2,41 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
 
-import { approveVideo } from '../../actions/auth';
+import { approveVideo, disapproveVideo } from '../../actions/auth';
 
 export class VideoCard extends Component {
-  onClick = e => {
+  onClickApprove = e => {
     this.props.approveVideo(e.target.id);
-
-    // this.props.approveVideo(this.props.text);
+  };
+  onClickDisapprove = e => {
+    this.props.disapproveVideo(e.target.id);
   };
 
   render() {
-    const { video, channel } = this.props;
-    console.log('each video', video);
+    const { video, approvedVideos } = this.props;
+    let button = '';
+    if (approvedVideos.includes(video.snippet.resourceId.videoId)) {
+      button = (
+        <button
+          id={video.snippet.resourceId.videoId}
+          onClick={this.onClickDisapprove}
+          className='btn btn-outline-danger'
+        >
+          Disapprove
+        </button>
+      );
+    } else {
+      button = (
+        <button
+          id={video.snippet.resourceId.videoId}
+          onClick={this.onClickApprove}
+          className='btn btn-outline-success'
+        >
+          Approve
+        </button>
+      );
+    }
+
     return (
       <div
         key={video.snippet.resourceId.videoId}
@@ -38,15 +61,7 @@ export class VideoCard extends Component {
             </small>
           </p>
         </div>
-        <div className='card-footer'>
-          <button
-            id={video.snippet.resourceId.videoId}
-            onClick={this.onClick}
-            className='btn btn-outline-success'
-          >
-            Approve
-          </button>
-        </div>
+        <div className='card-footer'>{button}</div>
       </div>
     );
   }
@@ -54,11 +69,11 @@ export class VideoCard extends Component {
 
 const mapStateToProps = state => {
   return {
-    channel: state.auth.channel
+    approvedVideos: state.auth.approvedVideos
   };
 };
 
 export default connect(
   mapStateToProps,
-  { approveVideo }
+  { approveVideo, disapproveVideo }
 )(VideoCard);
