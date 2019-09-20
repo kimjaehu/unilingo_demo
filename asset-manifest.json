@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/unilingo_demo/static/css/main.34de6062.chunk.css",
+    "main.js": "/unilingo_demo/static/js/main.62a813e0.chunk.js",
+    "main.js.map": "/unilingo_demo/static/js/main.62a813e0.chunk.js.map",
+    "runtime~main.js": "/unilingo_demo/static/js/runtime~main.2e3eeaa8.js",
+    "runtime~main.js.map": "/unilingo_demo/static/js/runtime~main.2e3eeaa8.js.map",
+    "static/js/2.fc5027fd.chunk.js": "/unilingo_demo/static/js/2.fc5027fd.chunk.js",
+    "static/js/2.fc5027fd.chunk.js.map": "/unilingo_demo/static/js/2.fc5027fd.chunk.js.map",
+    "index.html": "/unilingo_demo/index.html",
+    "precache-manifest.26b5c0d987ea0f34a20a9624a0c5e473.js": "/unilingo_demo/precache-manifest.26b5c0d987ea0f34a20a9624a0c5e473.js",
+    "service-worker.js": "/unilingo_demo/service-worker.js",
+    "static/css/main.34de6062.chunk.css.map": "/unilingo_demo/static/css/main.34de6062.chunk.css.map"
+  }
+}
